@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BookHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="image/logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="logo">
+      <img src="image/favicon.png" alt="" width="32" height="32">
+      <span>Book<span class="hub">Hub</span></span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" data-page="home">Home</a>
+      <a href="#books" data-page="books">Books</a>
+      <a href="#categories" data-page="categories">Categories</a>
+      <a href="#library" data-page="library">My Library</a>
+      <a href="#about" data-page="about">About Us</a>
+    </nav>
+
+    <form class="nav-search" id="navSearch">
+      <input type="search" id="navSearchInput" placeholder="Search books..." aria-label="Search books">
+    </form>
+
+    <div class="account-menu">
+      <button class="profile" id="profileBtn" title="Account" aria-label="Account">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </button>
+      <div class="dropdown hidden" id="profileMenu"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="page" id="page-home">
+  <div class="container hero">
+    <div class="hero-text">
+      <h1>Read More, Grow Further</h1>
+      <p>BookHub adalah perpustakaan digital yang membantu kamu menemukan, menyimpan, dan membaca buku favorit kapan saja, di perangkat apa saja.</p>
+      <form class="hero-search" id="heroSearch">
+        <input type="search" id="heroSearchInput" placeholder="Cari judul, penulis, atau kategori" aria-label="Cari buku">
+        <button type="submit" class="btn">Search</button>
+      </form>
+    </div>
+
+    <!-- Ilustrasi tumpukan buku + tablet -->
+    <div class="hero-art">
+      <svg viewBox="0 0 420 320" role="img" aria-label="Tumpukan buku dan tablet">
+        <ellipse cx="210" cy="296" rx="190" ry="14" fill="#E3EAF8"/>
+        <rect x="20" y="250" width="210" height="36" rx="6" fill="#3478F6"/>
+        <rect x="20" y="256" width="200" height="6" fill="#fff" opacity=".35"/>
+        <rect x="38" y="212" width="180" height="36" rx="6" fill="#1B2B4B"/>
+        <rect x="38" y="218" width="170" height="6" fill="#fff" opacity=".3"/>
+        <rect x="14" y="174" width="196" height="36" rx="6" fill="#8DB4FA"/>
+        <rect x="14" y="180" width="186" height="6" fill="#fff" opacity=".5"/>
+        <rect x="46" y="138" width="160" height="34" rx="6" fill="#3478F6"/>
+        <rect x="46" y="144" width="150" height="6" fill="#fff" opacity=".35"/>
+        <rect x="232" y="60" width="170" height="226" rx="18" fill="#1B2B4B"/>
+        <rect x="244" y="74" width="146" height="198" rx="8" fill="#fff"/>
+        <rect x="256" y="90" width="80" height="10" rx="5" fill="#3478F6"/>
+        <rect x="256" y="112" width="120" height="6" rx="3" fill="#D5DDEE"/>
+        <rect x="256" y="126" width="110" height="6" rx="3" fill="#D5DDEE"/>
+        <rect x="256" y="140" width="118" height="6" rx="3" fill="#D5DDEE"/>
+        <rect x="256" y="162" width="118" height="54" rx="8" fill="#EAF1FE"/>
+        <rect x="256" y="230" width="118" height="6" rx="3" fill="#D5DDEE"/>
+        <rect x="256" y="244" width="70" height="6" rx="3" fill="#D5DDEE"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="container section">
+    <div class="section-head">
+      <h2>Popular Books</h2>
+      <a href="#books" class="link">Lihat semua</a>
+    </div>
+    <div class="grid grid-5" id="popularGrid"></div>
+  </div>
+</section>
+
+<!-- ============ BOOKS ============ -->
+<section class="page" id="page-books">
+  <div class="container section">
+    <h1 class="page-title">Books</h1>
+    <div class="toolbar">
+      <input type="search" id="bookSearch" placeholder="Cari judul atau penulis..." aria-label="Cari buku">
+      <select id="bookCategory" aria-label="Filter kategori"></select>
+    </div>
+    <p class="muted" id="bookCount"></p>
+    <div class="grid" id="booksGrid"></div>
+    <div class="more"><button class="btn light hidden" id="loadMore">Load More</button></div>
+  </div>
+</section>
+
+<!-- ============ CATEGORIES ============ -->
+<section class="page" id="page-categories">
+  <div class="container section">
+    <h1 class="page-title">Categories</h1>
+    <div class="grid grid-4" id="categoryGrid"></div>
+
+    <div id="categoryResult" class="hidden">
+      <div class="section-head">
+        <h2 id="categoryTitle"></h2>
+        <button class="link-btn" id="categoryClose">Tutup</button>
+      </div>
+      <div class="grid" id="categoryBooks"></div>
+      <div class="more"><button class="btn light" id="categoryMore">Lihat semua di Books</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MY LIBRARY ============ -->
+<section class="page" id="page-library">
+  <div class="container section">
+    <h1 class="page-title">My Library</h1>
+    <div class="tabs" id="libraryTabs">
+      <button class="tab active" data-status="All">All</button>
+      <button class="tab" data-status="Not Started">Not Started</button>
+      <button class="tab" data-status="Reading">Reading</button>
+      <button class="tab" data-status="Completed">Completed</button>
+    </div>
+    <div class="grid" id="libraryGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" id="page-about">
+  <div class="container section">
+    <div class="about">
+      <div>
+        <h1>About Book<span class="hub">Hub</span></h1>
+        <p>BookHub dibuat agar membaca terasa mudah dan menyenangkan. Kami mengumpulkan buku dari berbagai bidang dalam satu tempat, sehingga kamu bisa menemukan bacaan baru, menyimpannya, dan melanjutkan membaca tanpa kehilangan progres.</p>
+        <a href="#books" class="btn">Explore Books</a>
+      </div>
+      <!-- Ilustrasi orang membaca -->
+      <svg viewBox="0 0 360 280" role="img" aria-label="Seseorang sedang membaca buku">
+        <ellipse cx="180" cy="262" rx="150" ry="12" fill="#E3EAF8"/>
+        <path d="M110 250c0-60 20-100 70-100s70 40 70 100z" fill="#3478F6"/>
+        <circle cx="180" cy="104" r="34" fill="#F2C9A5"/>
+        <path d="M146 100c0-26 16-40 36-40s34 14 32 40c-10-14-26-20-40-18-12 2-22 8-28 18z" fill="#1B2B4B"/>
+        <path d="M120 190l60 24 60-24 10 34-70 28-70-28z" fill="#fff" stroke="#1B2B4B" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M180 214v38" stroke="#1B2B4B" stroke-width="3"/>
+        <path d="M134 198l38 15M134 210l38 15M226 198l-38 15M226 210l-38 15" stroke="#D5DDEE" stroke-width="3"/>
+      </svg>
+    </div>
+
+    <div class="grid grid-3 features">
+      <div class="card feature"><div class="icon">📚</div><h3>Large Collection</h3><p>Ratusan judul dari fiksi hingga sains, terus bertambah.</p></div>
+      <div class="card feature"><div class="icon">⚡</div><h3>Easy Access</h3><p>Baca di laptop atau HP, lanjutkan dari halaman terakhir.</p></div>
+      <div class="card feature"><div class="icon">✨</div><h3>User Friendly</h3><p>Tampilan sederhana yang membuatmu fokus pada bacaan.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MY ACCOUNT ============ -->
+<section class="page" id="page-account">
+  <div class="container section">
+    <h1 class="page-title">My Account</h1>
+
+    <div class="card empty" id="accountGuest">
+      <p>Sign in untuk melihat dan mengatur akunmu.</p>
+      <button class="btn" data-auth="signin">Sign In</button>
+    </div>
+
+    <div class="account-grid hidden" id="accountUser">
+      <div class="card panel">
+        <div class="avatar" id="acAvatar"></div>
+        <h2 id="acName"></h2>
+        <p class="muted" id="acEmail"></p>
+        <p class="muted" id="acJoined"></p>
+        <div class="stats">
+          <div><strong id="statTotal">0</strong><span>Saved</span></div>
+          <div><strong id="statReading">0</strong><span>Reading</span></div>
+          <div><strong id="statDone">0</strong><span>Completed</span></div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <h3>Profile</h3>
+        <form id="profileForm" novalidate>
+          <label class="field"><span>Nama</span><input type="text" id="apName" autocomplete="name"></label>
+          <label class="field"><span>Email</span><input type="email" id="apEmail" readonly></label>
+          <button class="btn" type="submit">Save Changes</button>
+        </form>
+      </div>
+
+      <div class="card panel">
+        <h3>Change Password</h3>
+        <form id="passwordForm" novalidate>
+          <label class="field"><span>Password saat ini</span><input type="password" id="pwOld" autocomplete="current-password"></label>
+          <label class="field"><span>Password baru</span><input type="password" id="pwNew" autocomplete="new-password"></label>
+          <p class="form-error" id="pwMsg"></p>
+          <button class="btn" type="submit">Update Password</button>
+        </form>
+      </div>
+
+      <div class="card panel">
+        <h3>Session</h3>
+        <p class="muted">Keluar dari akun ini, atau hapus akun beserta seluruh koleksinya.</p>
+        <div class="row actions">
+          <button class="btn light" data-signout>Sign Out</button>
+          <button class="btn danger" id="deleteAccount">Delete Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">© 2026 BookHub. Read More, Grow Further. Data dan cover buku dari <a class="link" href="https://openlibrary.org" target="_blank" rel="noopener">Open Library</a>.</footer>
+
+<!-- ============ DETAIL / READER MODAL ============ -->
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Tutup">✕</button>
+    <div class="modal-head">
+      <img id="mCover" alt="">
+      <div>
+        <span class="tag" id="mCat"></span>
+        <h2 id="mTitle"></h2>
+        <p class="muted" id="mAuthor"></p>
+        <p id="mDesc"></p>
+      </div>
+    </div>
+
+    <div class="reader" id="mText"></div>
+
+    <div class="reader-controls">
+      <label for="mProgress">Progress: <strong id="mPercent">0%</strong></label>
+      <input type="range" id="mProgress" min="0" max="100" step="5" value="0">
+      <div class="row">
+        <select id="mStatus" aria-label="Status membaca">
+          <option>Not Started</option><option>Reading</option><option>Completed</option>
+        </select>
+        <button class="btn" id="mSave">Save to Library</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SIGN IN / SIGN UP ============ -->
+<div class="modal hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal-box auth-box">
+    <button class="modal-close" id="authClose" aria-label="Tutup">✕</button>
+    <h2 id="authTitle">Sign In</h2>
+    <p class="muted">Masuk untuk menyimpan koleksi dan progres membacamu.</p>
+
+    <div class="tabs auth-tabs">
+      <button type="button" class="auth-tab active" data-auth="signin">Sign In</button>
+      <button type="button" class="auth-tab" data-auth="signup">Sign Up</button>
+    </div>
+
+    <form id="signinForm" novalidate>
+      <label class="field"><span>Email</span><input type="email" id="siEmail" autocomplete="email"></label>
+      <label class="field"><span>Password</span><input type="password" id="siPass" autocomplete="current-password"></label>
+      <p class="form-error" id="siError"></p>
+      <button class="btn full" type="submit">Sign In</button>
+    </form>
+
+    <form id="signupForm" class="hidden" novalidate>
+      <label class="field"><span>Nama</span><input type="text" id="suName" autocomplete="name"></label>
+      <label class="field"><span>Email</span><input type="email" id="suEmail" autocomplete="email"></label>
+      <label class="field"><span>Password (min. 6 karakter)</span><input type="password" id="suPass" autocomplete="new-password"></label>
+      <label class="field"><span>Ulangi password</span><input type="password" id="suConfirm" autocomplete="new-password"></label>
+      <p class="form-error" id="suError"></p>
+      <button class="btn full" type="submit">Create Account</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast hidden" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
